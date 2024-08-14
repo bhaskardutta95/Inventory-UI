@@ -5,6 +5,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Dashboard from './components/pages/Dashboard';
 import Billing from './components/pages/Billing';
 import Stock from './components/pages/Stock';
+import BillSummary from './components/pages/BillSummary';
 
 const Stack = createNativeStackNavigator();
 
@@ -15,6 +16,7 @@ export default function App() {
         <Stack.Screen name="Dashboard" component={Dashboard} />
         <Stack.Screen name="Billing" component={Billing} />
         <Stack.Screen name="Stock" component={Stock} />
+        <Stack.Screen name="BillSummary" component={BillSummary} />
       </Stack.Navigator>
     </NavigationContainer>
   );
