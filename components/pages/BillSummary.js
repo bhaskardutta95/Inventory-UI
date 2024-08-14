@@ -24,9 +24,9 @@ export default function BillSummary({ route, navigation }) {
         renderItem={({ item }) => (
           <View style={styles.tableRow}>
             <Text style={styles.cellText}>{item.productName}</Text>
-            <Text style={styles.cellText}>${item.salePrice.toFixed(2)}</Text>
+            <Text style={styles.cellText}>Rs.{item.salePrice}</Text>
             <Text style={styles.cellText}>{item.quantity}</Text>
-            <Text style={styles.cellText}>${item.total.toFixed(2)}</Text>
+            <Text style={styles.cellText}>Rs.{item.total}</Text>
           </View>
         )}
       />
@@ -34,7 +34,7 @@ export default function BillSummary({ route, navigation }) {
       {/* Total Quantity and Bill */}
       <View style={styles.totalContainer}>
         <Text style={styles.totalText}>Total Quantity: {totalQuantity}</Text>
-        <Text style={styles.totalText}>Total Bill: ${totalBill.toFixed(2)}</Text>
+        <Text style={styles.totalText}>Total Bill: Rs.{totalBill}</Text>
       </View>
 
       {/* Buttons */}
