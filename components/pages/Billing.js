@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, FlatList, StyleSheet } from 'react-native';
+import { View, Text, TextInput, Button, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
 
 export default function Billing({ navigation }) {
   const [barcode, setBarcode] = useState('');
@@ -25,6 +25,10 @@ export default function Billing({ navigation }) {
     setMrp('');
     setSalePrice('');
     setQuantity('');
+  };
+
+  const handleDeleteProduct = (index) => {
+    setProducts(products.filter((_, i) => i !== index));
   };
 
   const handleDone = () => {
@@ -72,9 +76,12 @@ export default function Billing({ navigation }) {
       <FlatList
         data={products}
         keyExtractor={(item, index) => index.toString()}
-        renderItem={({ item }) => (
+        renderItem={({ item, index }) => (
           <View style={styles.productItem}>
-            <Text>{item.productName} - {item.quantity} x ${item.salePrice} = ${item.total}</Text>
+            <Text style={styles.productText}>{item.productName} - {item.quantity} x ${item.salePrice} = ${item.total}</Text>
+            <TouchableOpacity onPress={() => handleDeleteProduct(index)} style={styles.deleteButton}>
+              <Text style={styles.deleteButtonText}>Delete</Text>
+            </TouchableOpacity>
           </View>
         )}
       />
@@ -95,8 +102,25 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   productItem: {
-    padding: 10,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingVertical: 10,
     borderBottomColor: '#ccc',
     borderBottomWidth: 1,
+  },
+  productText: {
+    flex: 1,
+    fontSize: 16,
+  },
+  deleteButton: {
+    backgroundColor: '#FF6347',
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    borderRadius: 5,
+  },
+  deleteButtonText: {
+    color: 'white',
+    fontWeight: 'bold',
   },
 });
