@@ -5,7 +5,7 @@ export default function BillSummary({ route, navigation }) {
   const { products } = route.params;
 
   const totalQuantity = products.reduce((sum, product) => sum + product.quantity, 0);
-  const totalBill = products.reduce((sum, product) => sum + product.total, 0);
+  const totalBill = products.reduce((sum, product) => sum + (product.quantity * product.salePrice), 0);
 
   return (
     <View style={styles.container}>
@@ -26,7 +26,7 @@ export default function BillSummary({ route, navigation }) {
             <Text style={styles.cellText}>{item.productName}</Text>
             <Text style={styles.cellText}>Rs.{item.salePrice}</Text>
             <Text style={styles.cellText}>{item.quantity}</Text>
-            <Text style={styles.cellText}>Rs.{item.total}</Text>
+            <Text style={styles.cellText}>Rs.{item.salePrice * item.quantity}</Text>
           </View>
         )}
       />
