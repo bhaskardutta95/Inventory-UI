@@ -1,8 +1,14 @@
 import * as React from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, Text, View } from 'react-native';
 import * as FileSystem from 'expo-file-system';
 import { Asset } from 'expo-asset';
+import { SQLiteProvider } from "expo-sqlite/next";
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { NavigationContainer } from '@react-navigation/native';
+import Dashboard from './screens/Dashboard';
+
+const Stack = createNativeStackNavigator();
 
 const loadDatabase = async () => {
   const dbName = 'storedb.db';
@@ -30,25 +36,33 @@ export default function App() {
   },[]);
 
   if (!dbLoaded) return (
-    <View style={styles.container}>
+    <View style={{flex: 1}}>
     <ActivityIndicator size="large" />
     <Text>Loading...</Text>
     </View>
   );
 
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>    
+      <React.Suspense
+        fallback = {
+          <View style={{flex: 1}}>
+            <ActivityIndicator size={"large"} />
+            <Text>Loading Database...</Text>
+          </View>
+        }>
+        <SQLiteProvider databaseName='storedb.db' useSuspense={true}>
+          <Stack.Navigator>
+            <Stack.Screen 
+              name="Dashboard" 
+              component={Dashboard}
+              options={{ headerTitle: 'Dashboard', 
+                         headerLargeTitle: true, 
+                      }} />
+          </Stack.Navigator>
+        </SQLiteProvider>
+      </React.Suspense>
+    </NavigationContainer>
+
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
