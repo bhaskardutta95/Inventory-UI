@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {CustomerDto} from '../models/dto';
 import { TouchableOpacity, Text, View, TextInput,Button } from 'react-native';
+import CustomerListItem from './CustomerListItem';
 
 export default function CustomerList({
     customers, 
@@ -18,7 +19,9 @@ export default function CustomerList({
                         activeOpacity={.7}
                         onLongPress={() => deleteCustomer(customer.customer_id)}
                     >
-                    <Text> {customer.customer_id} | {customer.customer_name} | {customer.phone_number}</Text>
+                        <CustomerListItem
+                            customer={customer}/>
+
                     </TouchableOpacity>
                 )
             })}
